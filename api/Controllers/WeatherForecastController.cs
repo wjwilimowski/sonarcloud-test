@@ -21,13 +21,23 @@ public class WeatherForecastController : ControllerBase
     [HttpGet(Name = "GetWeatherForecast")]
     public IEnumerable<WeatherForecast> Get()
     {
-        var Weather = Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        var weather = new List<WeatherForecast>();
+        for (var i = 0; i < 10; i++) 
         {
-            Date = DateTime.Now.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        });
+            if (Random.Shared.Next() % 2 == 0) 
+            {
+                weather.Add(new WeatherForecast
+                {
+                    Date = DateTime.Now.AddDays(i),
+                    TemperatureC = Random.Shared.Next(-20, 55),
+                    Summary = Summaries[Random.Shared.Next(Summaries.Length)]
+                });
+            }
+        }
 
-        return Weather.ToArray();
+        if (weather.Count == 0)
+            _logger.LogInformation("No weather :(");
+
+        return weather;
     }
 }
