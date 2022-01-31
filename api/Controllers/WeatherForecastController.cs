@@ -40,4 +40,12 @@ public class WeatherForecastController : ControllerBase
 
         return weather;
     }
+    
+    private void DoSomething(int arg)
+    {
+        if (arg < 0)
+        {
+            throw new ArgumentException("arg should be non-negative", "arg");
+        }
+    }
 }
